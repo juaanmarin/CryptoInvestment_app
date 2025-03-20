@@ -13,7 +13,7 @@ body{
 header{
     margin: 10px;
     display: flex;
-    justify-content: center;
+    align-items: center;
     flex-wrap: wrap;
     justify-content: space-between;
     padding: 20px;
@@ -22,7 +22,7 @@ header{
 .search{
     width: 450px;
     height: 35px;
-    color: ;
+    color: #EAECEF;
     background-color: transparent;
     border: 1px solid #474D57;
     border-radius: 8px;
@@ -64,4 +64,11 @@ footer a {
 
 footer a:hover {
     color: #FCD535;
+}
+
+/* Ajustar tamaño de texto en pantallas pequeñas */
+@media (max-width: 768px) {
+    .btnsearch{
+        background-color: aliceblue;
+    }
 }

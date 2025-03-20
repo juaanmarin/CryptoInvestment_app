@@ -1,0 +1,39 @@
+/* Contenedor responsivo */
+.table-container {
+    width: 100%;
+    overflow-x: auto; /* Permite desplazamiento horizontal en pantallas pequeñas */
+}
+
+/* Estilo de la tabla */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Encabezados y celdas */
+th, td {
+    padding: 10px;
+    text-align: center;
+    border: 1px solid #ddd;
+}
+
+/* Ajustar tamaño de texto en pantallas pequeñas */
+@media (max-width: 768px) {
+    th, td {
+        font-size: 14px;
+        padding: 8px;
+    }
+}
+
+/* Ajuste en móviles */
+@media (max-width: 480px) {
+    th, td {
+        font-size: 12px;
+        padding: 5px;
+    }
+
+    .table-container {
+        overflow-x: scroll; /* Permite desplazamiento horizontal en pantallas pequeñas */
+    }
+    
+}
