@@ -8,7 +8,9 @@
     ini_set("error_log", "php-error.log");
 
     // se cargan los archivos base
+    require_once 'libs/database.php';
     require_once 'libs/controller.php';
+    require_once 'libs/model.php';
     require_once 'libs/view.php';
     require_once 'libs/app.php';
 

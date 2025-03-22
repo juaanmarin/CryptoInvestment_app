@@ -1,14 +1,11 @@
-
-
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="public/css/styleLayouts.css">
-    <link rel="stylesheet" href="public/css/home.css">
+    <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/styleLayouts.css">
+    <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/home.css">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>CryptoInvestment App</title>
 </head>
@@ -16,41 +13,50 @@
     <!-- header -->
     <?php require_once "views/layouts/header.php"; ?>
     
-    <div class="table-container">
-        <table>
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Nombre</th>
-                    <th>Símbolo</th>
-                    <th>Precio (USD)</th>
-                    <th>Volumen 24h</th>
-                    <th>% 1h</th>
-                    <th>% 24h</th>
-                    <th>% 7d</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($data->data as $index => $crypto) { ?>
+    <?php   if (!empty($data)) {  ?>
+        <div class="table-container">
+            <table>
+                <thead>
                     <tr>
-                        <td><?= $index + 1 ?></td>
-                        <td><?= $crypto->name ?></td>
-                        <td><?= $crypto->symbol ?></td>
-                        <td>$<?= number_format($crypto->quote->USD->price, 2) ?></td>
-                        <td>$<?= number_format($crypto->quote->USD->volume_24h, 2) ?></td>
-                        <td style="color: <?= $crypto->quote->USD->percent_change_1h >= 0 ? 'green' : 'red' ?>;">
-                            <?= number_format($crypto->quote->USD->percent_change_1h, 2) ?>%
-                        </td>
-                        <td style="color: <?= $crypto->quote->USD->percent_change_24h >= 0 ? 'green' : 'red' ?>;">
-                            <?= number_format($crypto->quote->USD->percent_change_24h, 2) ?>%
-                        </td>
-                        <td style="color: <?= $crypto->quote->USD->percent_change_7d >= 0 ? 'green' : 'red' ?>;">
-                            <?= number_format($crypto->quote->USD->percent_change_7d, 2) ?>%
-                        </td>
+                        <th>#</th>
+                        <th>Logo</th>
+                        <th>Nombre</th>
+                        <th>Símbolo</th>
+                        <th>Descripción</th>
+                        <th>Página Oficial</th>
                     </tr>
-                <?php } ?>
-            </tbody>
-        </table>
+                </thead>
+                <tbody>
+                    <?php foreach ($data->data as $index => $crypto) {  
+                        //   foreach ($crypto1 as $key => $crypto) { ?>   
+
+                        <tr>
+                            <td><?= $key + 1 ?></td>
+                            <td> <img src="<?= $crypto->logo ?>" alt="logo"> </td>
+                            <td><?= $crypto->name ?></td>
+                            <td><?= $crypto->symbol ?></td>
+                            <td><?= $crypto->description ?></td>
+                            <td><a href="<?= $crypto->urls->website[0] ?>" target="_blank"><?= $crypto->urls->website[0] ?></a></td>
+                            <td>
+                                <form action="<?php echo constant('URL');?>home/saveCurrency" method="POST">
+                                    <input type="hidden" name="id" value="<?= $crypto->id ?>">
+                                    <input type="hidden" name="name" value="<?= $crypto->name ?>">
+                                    <input type="hidden" name="symbol" value="<?= $crypto->symbol ?>">
+                                    <input type="hidden" name="description" value="<?= $crypto->description ?>">
+                                    <input type="hidden" name="logo" value="<?= $crypto->logo ?>">
+                                    <input type="hidden" name="website" value="<?= $crypto->urls->website[0] ?>">
+                                    <button type="submit">Guardar</button>
+                                </form>
+                            </td>
+                        </tr>
+                    <?php /*}*/ } ?>
+                </tbody>
+            </table>
+        </div>
+    <?php }?>
+
+    <div>
+        <?php //require_once "views/home/miFavoriteCripto.php"; ?>
     </div>
 
     <div>
