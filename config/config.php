@@ -8,14 +8,14 @@ define('KEY_API', 'b54bcf4d-1bca-4e8e-9a24-22ff2c3d462c');
 
 // Url y key para produccion
 // define('URL_API', 'https://pro-api.coinmarketcap.com/');
-// define('KEY_API', '');
+// define('KEY_API', 'dffd909c-5dbe-4919-8762-ec63f2730e64');
 
 
 // Globales para conectarse a la bd local
 define('HOST', 'localhost:3307');
 define('DB', 'cryptoinvestment_app');
 define('USER', 'root');
-define('PASSWORD', "");
+define('PASSWORD', "nuviavelasquez07");
 define('CHARSET', 'utf8mb4');
 
 

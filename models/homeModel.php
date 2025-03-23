@@ -32,6 +32,7 @@
             return json_decode($response);
         }
 
+        // guarda las criptomonedas favoritas 
         public function saveCurrency($id, $name, $symbol, $description, $logo, $website){
             try{
                 $query = $this->prepare('INSERT INTO favorite_cryptos (id, name, symbol, description, logo, website) VALUES(:id, :name, :symbol, :description, :logo, :website)');
@@ -46,8 +47,21 @@
                 return true;
             }catch(PDOException $e){
                 error_log('USERMODEL::save->PDOExeption '.$e);
-                //echo $e;
                 return false;
+            }
+        }
+
+        // para consultar las criptomonedas favoritas
+        public function getAllCurrentcy(){
+
+            try{
+                $query = $this->query('SELECT * FROM favorite_cryptos');
+                $items = $query->fetchAll(PDO::FETCH_ASSOC);
+                
+                return $items;
+
+            }catch(PDOException $e){
+                error_log('USERMODEL::getAll->PDOExeption '.$e);
             }
         }
 

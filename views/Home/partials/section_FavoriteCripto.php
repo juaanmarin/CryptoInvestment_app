@@ -1,6 +1,5 @@
-<h2>favorite</h2>
+<h2>My Favorite Criptos</h2>
 
-<?php if (!empty($data)) { ?>
     <div class="table-container">
         <table>
             <thead>
@@ -37,4 +36,3 @@
             </tbody>
         </table>
     </div>
-<?php }?>

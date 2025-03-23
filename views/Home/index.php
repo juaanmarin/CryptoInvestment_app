@@ -4,74 +4,44 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous"> -->
     <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/styleLayouts.css">
     <link rel="stylesheet" href="<?php echo constant('URL'); ?>public/css/home.css">
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <title>CryptoInvestment App</title>
 </head>
 <body>
     <!-- header -->
     <?php require_once "views/layouts/header.php"; ?>
     
-    <?php   if (!empty($data)) {  ?>
-        <div class="table-container">
-            <table>
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Logo</th>
-                        <th>Nombre</th>
-                        <th>Símbolo</th>
-                        <th>Descripción</th>
-                        <th>Página Oficial</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php foreach ($data->data as $index => $crypto) {  
-                        //   foreach ($crypto1 as $key => $crypto) { ?>   
+    <!-- section -->
+    <?php 
+        if(!empty($data) && $data->view == 'search') {  
+            require_once "views/home/partials/section_searchCripto.php";
+        }
 
-                        <tr>
-                            <td><?= $key + 1 ?></td>
-                            <td> <img src="<?= $crypto->logo ?>" alt="logo"> </td>
-                            <td><?= $crypto->name ?></td>
-                            <td><?= $crypto->symbol ?></td>
-                            <td><?= $crypto->description ?></td>
-                            <td><a href="<?= $crypto->urls->website[0] ?>" target="_blank"><?= $crypto->urls->website[0] ?></a></td>
-                            <td>
-                                <form action="<?php echo constant('URL');?>home/saveCurrency" method="POST">
-                                    <input type="hidden" name="id" value="<?= $crypto->id ?>">
-                                    <input type="hidden" name="name" value="<?= $crypto->name ?>">
-                                    <input type="hidden" name="symbol" value="<?= $crypto->symbol ?>">
-                                    <input type="hidden" name="description" value="<?= $crypto->description ?>">
-                                    <input type="hidden" name="logo" value="<?= $crypto->logo ?>">
-                                    <input type="hidden" name="website" value="<?= $crypto->urls->website[0] ?>">
-                                    <button type="submit">Guardar</button>
-                                </form>
-                            </td>
-                        </tr>
-                    <?php /*}*/ } ?>
-                </tbody>
-            </table>
-        </div>
-    <?php }?>
+        if (!empty($data) && $data->view == 'favorites') {
+            require_once "views/home/partials/section_FavoriteCripto.php";
+            require_once "views/home/partials/section_graphics.php";
+        }else {
+            echo '<h2> aun no tinene monedas en favoritos </h2>';
+        }
+    ?>
+
+
+
 
     <div>
-        <?php //require_once "views/home/miFavoriteCripto.php"; ?>
-    </div>
-
-    <div>
-        <h3>📊 Gráfico de Historial de Precios (Bitcoin)</h3>
-        <canvas id="cryptoChart"></canvas>
-    </div>
-
-    <div>
-        <h3>🚀 Última actualización: <span id="lastUpdated"><?= date('Y-m-d H:i:s') ?></span></h3>
+        <h3>🚀 Last update <span id="lastUpdated"><?= date('Y-m-d H:i:s') ?></span></h3>
     </div>
 
     <!-- footer -->
     <?php require_once "views/layouts/footer.php"; ?>
 
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="public/js/reload.js"></script>
+    <!-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script> -->
+    <!-- <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js" integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.min.js" integrity="sha384-0pUGZvbkm6XF6gxjEnlmuGrJXVbNuzT9qBBavbLwCsOGabYfZo0T0to5eqruptLy" crossorigin="anonymous"></script> -->
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="public/js/graphics.js"></script>
 </body>
 </html>

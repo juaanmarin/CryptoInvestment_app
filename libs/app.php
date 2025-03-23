@@ -60,8 +60,8 @@
                 }
             }else{
                 //no existe archivo, mandar error
-                $controller = new Errores();
-                $controller->render();
+                // $controller = new Errores();
+                // $controller->render();
             }
 
         }

@@ -9,26 +9,33 @@
         //se llama el metodo render de la clase view para cargar una vista
         function render(){
             $data = $this->favoriteCripto();
-            $this->view->render('home/index');
+            $this->view->render('home/index', $data);
         }
 
         // para buscar criptomonedas por nombre
         public function searchCurrency(){
             if( $this->existPOST(['namecurrency']) ){
-                $namecurrency = $this->getPost('namecurrency');
+                $namecurrency = trim($this->getPost('namecurrency'));
+                $data = [];
+               
 
-                $endPoint = 'v2/cryptocurrency/info';
-                $parameters = [
-                    'symbol' => $namecurrency,
-                    'skip_invalid' => 'true'
-                ];
-
-                $data = $this->model->apiRequest($endPoint, $parameters);
+                if ($namecurrency != '' || !empty($namecurrency)) {
+  
+                    $endPoint = 'v2/cryptocurrency/info';
+                    $parameters = [
+                        'symbol' => $namecurrency,
+                        'skip_invalid' => 'true'
+                    ];
+    
+                    $data = $this->model->apiRequest($endPoint, $parameters);
+                    $data->view = 'search'; //se utiliza para saber en que parte de la vista se debe cargar
+                }else {
+                    $this->redirect('', '');
+                }
+ 
                 $this->view->render('home/index', $data);
     
             }else{
-                // error, cargar vista con errores
-                //$this->errorAtLogin('Error al procesar solicitud');
                 error_log('Login::authenticate() error with params');
                 $this->redirect('', '');
             }
@@ -45,13 +52,9 @@
                 $website = $this->getPost('website');
 
                 $data = $this->model->saveCurrency($id, $name, $symbol, $description, $logo, $website);
-                
-                // $this->view->render('home/index', $data);
                 $this->redirect('', '');
 
             }else{
-                // error, cargar vista con errores
-                //$this->errorAtLogin('Error al procesar solicitud');
                 error_log('Login::authenticate() error with params');
                 $this->redirect('', '');
             }
@@ -60,14 +63,22 @@
         // para buscar informacion de las criptomnedas favoritas
         public function favoriteCripto(){
             
-            $endPoint = 'v1/cryptocurrency/listings/latest';
-            $parameters = [
-                'start' => '1',
-                'limit' => '100',
-                'convert' => 'USD'
-            ];
+            $favoriteCriptos = $this->model->getAllCurrentcy();
+            $data = [];
 
-            $data = $this->model->apiRequest($endPoint, $parameters);
+            if (count($favoriteCriptos) >= 1) {
+                $ids = array_column($favoriteCriptos, 'id'); // Extrae solo los ID en el array
+                $paramId = implode(',', $ids); // Une los valores con una coma
+    
+                $endPoint = 'v2/cryptocurrency/quotes/latest';
+                $parameters = [
+                    'id' => $paramId,
+                ];
+    
+                $data = $this->model->apiRequest($endPoint, $parameters);
+                $data->view = 'favorites'; //se utiliza para saber en que parte de la vista se debe cargar
+            }
+            
             return $data;
     
         }
