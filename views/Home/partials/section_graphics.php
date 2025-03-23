@@ -8,3 +8,7 @@
         echo "<script>var criptosData = " . json_encode($data->data) . ";</script>";
     ?>
 </div>
+
+<div>
+    <h3>🚀 Last update <span id="lastUpdated"><?= date('Y-m-d H:i:s') ?></span></h3>
+</div>

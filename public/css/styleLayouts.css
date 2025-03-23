@@ -57,7 +57,34 @@ footer a:hover {
 
 /* Ajustar tamaño de texto en pantallas pequeñas */
 @media (max-width: 768px) {
+    header{
+        flex-direction: column;   
+        align-items: center;
+        gap: 10px;
+    }  
+
+    .search{
+        width: 300px;
+    }
+
     .btnsearch{
-        background-color: aliceblue;
+        width: 100px;
+}
+
+@media (max-width: 480px) {
+    
+    header{
+        flex-direction: column;   
+        align-items: center;
+        gap: 20px;
+    }  
+    header form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .search{
+        width: 300px;
     }
 }
